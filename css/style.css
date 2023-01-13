@@ -1,0 +1,28 @@
+body {
+	background-color: white;
+	color: black;
+	font-family: sans-serif; 
+	text-align: center;
+	width: 75%;
+	margin: auto;
+}
+a:link { color: #00b933; }
+a:visited { color: #00b933; }
+.logo { 
+	display: flex; 
+	justify-content: center;
+	align-items: center;
+	list-style-type:none;
+	padding: 0;
+	margin: 0;
+}
+hr {
+	
+	border: 1px solid black;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+article { text-align: justify; }
+article h2 { text-align: center; } 
+article ul { text-align: left; }
+footer { padding-bottom: 1rem; }

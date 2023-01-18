@@ -25,21 +25,22 @@
 				<button type="submit">Los!</button>
 			</form>
 		</div>
+		<br>
 		<div class="sprachwahl">
 			[ <?php include 'inc/sp_auswahl.php'; ?> ]
 		</div>
+		<br>
 		<div class="buchstabenliste">
 			<?php include 'inc/bs_auswahl.php';	?>
 		</div> 
+		<br>
 		<div class="wortliste">	
-			<table>
-				<?php include 'inc/db_abfrage.php';	?>
-			</table>
+			<?php include 'inc/db_abfrage.php';	?>
 		</div>
 	</main>
 	<hr>
 	<footer>
-		<small>&copy 2021<br><a href="impressum.html">Empressom</a></small>
+		<small>&copy; 2021<br><a href="impressum.html">Empressom</a></small>
 	</footer>
 </body>
 </html>

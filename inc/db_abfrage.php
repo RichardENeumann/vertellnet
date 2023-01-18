@@ -1,13 +1,13 @@
 <?php
-
-include 'gina.php';
-
-$db = mysqli_connect($hostname, $username, $password, $database);
+// database login credentials are loaded from a cfg file away from public access
+$dbconfig = parse_ini_file('../../private/config.ini');
+// fire up database connection
+$db = mysqli_connect($dbconfig['servername'], $dbconfig['username'], $dbconfig['password'], $dbconfig['dbname']);
 
 if (mysqli_connect_errno()) {
 	printf("Verbindung zur Datenbank fehlgeschlagen: <br> %s <br>", mysqli_connect_error());
 }
-
+echo "<table class=\"tbanzeige\">";
 if ($_GET['spr'] == 'hoog') { 
 	$anfrage = mysqli_query($db, 
 		"SELECT hoog, plat FROM " . $_GET['bst'] . "
@@ -66,8 +66,7 @@ if ($_GET['spr'] == 'hoog') {
 				<th>plat</th>
 			</tr>";
 	while ($reihe = mysqli_fetch_array($anfrage)) {
-		$reihenklasse = ($reihenklasse=='alt1') ? 'alt2' : 'alt1';
-		echo "	<tr class=\"{$reihenklasse}\">
+		echo "	<tr>
 					<td>{$reihe['hoog']}</td>
 					<td>{$reihe['plat']}</td>
 				</tr>";
@@ -129,13 +128,11 @@ else {
 				<th>hoog</th>
 			</tr>"; 
 	while ($reihe = mysqli_fetch_array($anfrage)) {
-		$reihenklasse = ($reihenklasse=='alt1') ? 'alt2' : 'alt1';
-		echo "	<tr class=\"{$reihenklasse}\">
+		echo "	<tr>
 					<td>{$reihe['plat']}</td>
 					<td>{$reihe['hoog']}</td>
 				</tr>";
 	}	
 }
-
-
+echo "</table>";
 ?>

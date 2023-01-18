@@ -26,3 +26,9 @@ article { text-align: justify; }
 article h2 { text-align: center; } 
 article ul { text-align: left; }
 footer { padding-bottom: 1rem; }
+.tbanzeige { 
+	margin: auto; 
+	text-align: left; 
+	width: 75%; 
+}
+.tbanzeige tr:nth-Child(odd) { background-color: #f0f0f0; } 

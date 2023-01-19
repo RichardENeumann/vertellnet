@@ -6,6 +6,7 @@
 	<title>Wörterbuch für Duisburger Platt - Wöörtbuuk vör Düsbergsch Plat</title>
 	<meta name="description" content="ein Wörterbuch für die niederfränkischen Dialekte des Duisburger Stadtgebiets">
 	<link href="css/style.css" rel="stylesheet">
+	<?php require 'inc/wbAPI.php' ?>
 </head>
 <body>
 	<header>
@@ -35,7 +36,7 @@
 		</div> 
 		<br>
 		<div class="wortliste">	
-			<?php include 'inc/db_abfrage.php';	?>
+			<?php wbQuery($_GET['spr'], $_GET['bst']); ?>
 		</div>
 	</main>
 	<hr>

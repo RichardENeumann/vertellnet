@@ -4,6 +4,16 @@ $_GET['lang'] = isset($_GET['lang']) ? $_GET['lang'] : 'hoog';
 $_GET['query'] = isset($_GET['query'])? $_GET['query'] : 'a';
 $_GET['rType'] = isset($_GET['rType']) ? $_GET['rType'] : 'html';
 
+// Build the search box
+function wbBuildSearch() {
+	echo '<form action="">';
+	echo '<input type="hidden" name=lang value="'.$_GET['lang'].'"></input>';
+	echo '<input type="text" name="query" placeholder="Süke..."> ';
+	echo '<input type="hidden" name=rType value="'.$_GET['rType'].'"></input>';
+	echo '<button type="submit">Los!</button>';
+	echo '</form>';
+}
+
 // Build the language selector
 function wbBuildLang() { 
 	echo '<a href="?lang=hoog&amp;query='.$_GET['query'].'&amp;rType=html">hoog</a> - ';

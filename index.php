@@ -22,10 +22,7 @@
 	<hr>
 	<main>
 		<div class="suchleiste">
-			<form action="">
-				<input type="text" name="suche" placeholder="Süke geet noch ni">
-				<button type="submit">Los!</button>
-			</form>
+			<?php wbBuildSearch(); ?>
 		</div>
 		<br>
 		<div class="sprachwahl">

@@ -7,6 +7,7 @@
 	<meta name="description" content="ein Wörterbuch für die niederfränkischen Dialekte des Duisburger Stadtgebiets">
 	<link href="css/style.css" rel="stylesheet">
 	<?php require 'inc/wbAPI.php' ?>
+	<?php require 'inc/wbBuildNav.php' ?>
 </head>
 <body>
 	<header>
@@ -28,15 +29,15 @@
 		</div>
 		<br>
 		<div class="sprachwahl">
-			[ <?php include 'inc/sp_auswahl.php'; ?> ]
+			[ <?php wbBuildLang(); ?> ]
 		</div>
 		<br>
 		<div class="buchstabenliste">
-			<?php include 'inc/bs_auswahl.php';	?>
+			<?php wbBuildLetter(); ?>
 		</div> 
 		<br>
 		<div class="wortliste">	
-			<?php wbParseRequest($_GET['spr'], $_GET['bst'], $_GET['rType']); ?>
+			<?php wbParseRequest($_GET['lang'], $_GET['query'], $_GET['rType']); ?>
 		</div>
 	</main>
 	<hr>

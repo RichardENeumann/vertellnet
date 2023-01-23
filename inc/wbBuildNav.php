@@ -7,9 +7,9 @@ $_GET['rType'] = isset($_GET['rType']) ? $_GET['rType'] : 'html';
 // Build the search box
 function wbBuildSearch() {
 	echo '<form action="">';
-	echo '<input type="hidden" name=lang value="'.$_GET['lang'].'"></input>';
+	echo '<input type="hidden" name="lang" value="'.$_GET['lang'].'"></input>';
 	echo '<input type="text" name="query" placeholder="Süke..."> ';
-	echo '<input type="hidden" name=rType value="'.$_GET['rType'].'"></input>';
+	echo '<input type="hidden" name="rType" value="'.$_GET['rType'].'"></input>';
 	echo '<button type="submit">Los!</button>';
 	echo '</form>';
 }

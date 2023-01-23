@@ -36,7 +36,7 @@
 		</div> 
 		<br>
 		<div class="wortliste">	
-			<?php wbQuery($_GET['spr'], $_GET['bst']); ?>
+			<?php wbParseRequest($_GET['spr'], $_GET['bst'], $_GET['rType']); ?>
 		</div>
 	</main>
 	<hr>

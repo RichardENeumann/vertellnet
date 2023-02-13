@@ -1,9 +1,4 @@
 <?php
-// Check and initialize GET params
-$_GET['lang'] = isset($_GET['lang']) ? $_GET['lang'] : 'hoog';
-$_GET['query'] = isset($_GET['query'])? $_GET['query'] : 'a';
-$_GET['rType'] = isset($_GET['rType']) ? $_GET['rType'] : 'html';
-
 // Build the search box
 function wbBuildSearch() {
 	echo '<form action="">';

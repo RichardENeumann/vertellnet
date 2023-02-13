@@ -1,94 +1,106 @@
-<?php
-// declare(strict_types=1); 
+<?php // declare(strict_types=1); 
 // API Database Query Parameters: 
-// 'lang' = string: 'hoog' || 'plat' determines how to query database
+// 'lang' = string: 'hoog' || 'plat' determines which way around to query the database
 // 'query' = string: search string; if length=1 fetch by starting letter, else search whole wb in hoog || plat for string
 // 'rType' = string: 'html' || 'json' returns result as html string or json object (when called from javascript)
 
-// Check if the request contains workable variables
+// allowed chars for browsing database by single letter
+define("ALLOWEDCHARS", "abcdefghijklmnopqrstuvwz");
+
+// initialize and validate GET params on first page load
+$_GET['lang'] = isset($_GET['lang']) ? $_GET['lang'] : 'hoog';
+$_GET['lang'] = ($_GET['lang'] == 'plat') ? 'plat' : 'hoog';
+$_GET['query'] = isset($_GET['query'])? $_GET['query'] : 'a';
+$_GET['rType'] = isset($_GET['rType']) ? $_GET['rType'] : 'html';
+$_GET['rType'] = ($_GET['rType'] == 'json') ? 'json' : 'html';
+
+// validate request params
 function wbParseRequest($lang, $query, $rType) {
-// here be magic
-	wbFetchResult($lang, $query, $rType);
+	$lang = ($lang == 'plat') ? 'plat' : 'hoog';
+	$rType = ($rType == 'json') ? 'json' : 'html';
+	switch (strlen($query)) {
+		case 0:
+			echo "Van neks komt neks." ;
+			break;
+		case 1:
+			if (preg_match('/'.$query.'/i', ALLOWEDCHARS)) { 
+				wbFetchResult($lang, $query, $rType); 
+			} 
+			else { 
+				echo "Dat kenne wy niet."; 
+			}
+			break;
+		default:
+			wbFetchResult($lang, $query, $rType);
+			break;
+	}		
 }
+
 // Get request from the database
 function wbFetchResult($lang, $query, $rType) {
-
-// Database credentials are loaded from outside of public web access
+	// Database credentials are loaded from outside of public web access
 	$dbConfig = parse_ini_file('../../private/config.ini');	
-
-// For synergy reasons the spreadsheet verb tables hoog/plat order was the 
-// wrong way around before a proper db was built. 
-// It takes time to sort through 800+ verbs plus conjugations,
-// Queries via 'hoog' will be faster once verb tables are sorted properly
-	if ($lang == 'hoog') { 
-		$dbQuery = '
-			SELECT hoog, plat FROM '.$query.' UNION
-			SELECT hoog, plat FROM avb WHERE LEFT(hoog,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM bvb WHERE LEFT(hoog,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM cvb WHERE LEFT(hoog,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM dvb WHERE LEFT(hoog,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM evb WHERE LEFT(hoog,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM fvb WHERE LEFT(hoog,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM gvb WHERE LEFT(hoog,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM hvb WHERE LEFT(hoog,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM ivb WHERE LEFT(hoog,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM jvb WHERE LEFT(hoog,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM kvb WHERE LEFT(hoog,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM lvb WHERE LEFT(hoog,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM mvb WHERE LEFT(hoog,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM nvb WHERE LEFT(hoog,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM ovb WHERE LEFT(hoog,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM pvb WHERE LEFT(hoog,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM rvb WHERE LEFT(hoog,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM svb WHERE LEFT(hoog,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM tvb WHERE LEFT(hoog,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM uvb WHERE LEFT(hoog,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM vvb WHERE LEFT(hoog,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM wvb WHERE LEFT(hoog,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM zvb WHERE LEFT(hoog,1) = "'.$query.'" ORDER BY hoog';
-		try {
-			$dbHandle = new PDO ('mysql:dbname='.$dbConfig['dbname'].'; host='.$dbConfig['servername'], 
-									$dbConfig['username'], $dbConfig['password']);
-			$dbResult = $dbHandle->query($dbQuery);
-			$dbHandle = null;
-		}
-		catch(PDOException $e) { echo $e->getMessage(); }
+	if (strlen($query) == 1) { 
+		$exp = $query.'%';
 	}	
-	elseif ($lang == 'plat') {
-		$dbQuery = '
-			SELECT hoog, plat FROM '.$query.'vb UNION 
-			SELECT hoog, plat FROM a WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM b WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM c WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM d WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM e WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM f WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM g WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM h WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM i WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM j WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM k WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM l WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM m WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM n WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM o WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM p WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM q WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM r WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM s WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM t WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM u WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM v WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM w WHERE LEFT(plat,1) = "'.$query.'" UNION
-			SELECT hoog, plat FROM z WHERE LEFT(plat,1) = "'.$query.'" ORDER BY plat';
-		try {
-			$dbHandle = new PDO ('mysql:dbname='.$dbConfig['dbname'].'; host='.$dbConfig['servername'],
-															$dbConfig['username'], $dbConfig['password']);
-			$dbResult = $dbHandle->query($dbQuery);
-			$dbHandle = null;			
-		}
-		catch(PDOException $e) { echo $e->getMessage(); }
+	else { 
+		$exp = '%'.$query.'%'; 
+	}	
+	$dbQuery = '
+		SELECT hoog, plat FROM a WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM b WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM c WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM d WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM e WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM f WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM g WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM h WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM i WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM j WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM k WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM l WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM m WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM n WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM o WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM p WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM q WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM r WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM s WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM t WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM u WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM v WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM w WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM z WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM avb WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM bvb WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM cvb WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM dvb WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM evb WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM fvb WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM gvb WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM hvb WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM ivb WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM jvb WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM kvb WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM lvb WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM mvb WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM nvb WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM ovb WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM pvb WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM rvb WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM svb WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM tvb WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM uvb WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM vvb WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM wvb WHERE '.$lang.' LIKE "'.$exp.'" UNION
+		SELECT hoog, plat FROM zvb WHERE '.$lang.' LIKE "'.$exp.'" ORDER BY '.$lang;
+	try {
+		$dbHandle = new PDO ('mysql:dbname='.$dbConfig['dbname'].'; host='.$dbConfig['servername'], 
+			$dbConfig['username'], $dbConfig['password']);
+		$dbResult = $dbHandle->query($dbQuery);
+		$dbHandle = null;
 	}
+	catch(PDOException $e) { echo $e->getMessage(); }
 	wbReturnResult($lang, $dbResult, $rType);
 }
 
@@ -103,7 +115,7 @@ function wbReturnResult($lang, $dbResult, $rType) {
 					</tr>';
 			ob_start();		
 			foreach ($dbResult as $row) {
-				echo '	<tr>
+				echo '		<tr>
 							<td>'.$row['hoog'].'</td>
 							<td>'.$row['plat'].'</td>
 						</tr>';
@@ -117,16 +129,16 @@ function wbReturnResult($lang, $dbResult, $rType) {
 					</tr>';
 			ob_start();
 			foreach ($dbResult as $row) {
-				echo '	<tr>
-							<td>'.$row['plat'].'</td>
-							<td>'.$row['hoog'].'</td>
-						</tr>';
+				echo '<tr>
+					<td>'.$row['plat'].'</td>
+					<td>'.$row['hoog'].'</td>
+				</tr>';
 			}
 			ob_end_flush();
 		}
-		else { echo 'Doa häwwe wy nex to gefone.'; }	
+		else { echo 'Doa häwwe wy neks to gefone.'; }	
 		echo '</table>';	
 	}
-	else { echo 'here be json soon'; }
+	else { echo 'here be json soon'; }	
 }
 ?>

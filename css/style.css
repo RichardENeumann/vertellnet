@@ -1,35 +1,88 @@
+a:link { 
+	color: #00b933; 
+}
+a:visited { 
+	color: #00b933; 
+}
+html {
+	display: flex;
+	justify-content: center;
+}
 body {
 	background-color: white;
 	color: black;
 	font-family: sans-serif; 
 	text-align: center;
-	width: 75%;
-	margin: auto;
+	width: 95%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
-a:link { color: #00b933; }
-a:visited { color: #00b933; }
-.logo { 
+header { 
 	display: flex; 
 	justify-content: center;
 	align-items: center;
-	list-style-type:none;
-	padding: 0;
-	margin: 0;
 }
 hr {
-	border: 0;
 	border-top: 1px solid black;
 	margin-top: 1rem;
 	margin-bottom: 1rem;
+	width: 100%;
 }
-article { text-align: justify; }
-article h2 { text-align: center; } 
-article ul { text-align: left; }
-footer { padding-bottom: 1rem; }
-.tbanzeige { 
-	margin: auto; 
+main {
+	display: flex;
+	flex-direction: column;
+	
+	align-items: center;
+	width: 95%;
+}
+.buchstabenliste {
+	font-size: 1.5rem;
+}
+main > table {
 	text-align: left; 
-	width: 75%; 
+	width: 100%; 
 }
-tr { margin: auto; }
-.tbanzeige tr:nth-Child(odd) { background-color: #f0f0f0; } 
+table tr:nth-Child(odd) { 
+background-color: #f0f0f0; 
+}
+/* Gestaltung der Einführungsseite */
+article { 
+	text-align: justify; 
+}
+article h2 { 
+	text-align: center; 
+} 
+article ul { 
+	text-align: left; 
+}
+footer { 
+	padding-bottom: 1rem; 
+}
+/* Tablet Gestaltung */
+@media screen and (min-width: 600px) { 
+	html {
+		background-color: gray;
+	}
+	body {
+		margin: 24px 48px;
+		box-shadow: black 8px 8px 4px;
+	}
+	hr {
+		width: 95%;
+	}
+	main > table {
+		font-size: 1.2rem;
+		width: 80%; 
+	}
+}
+/* Desktop Gestaltung */
+@media only screen and (min-width: 1280px) { 
+    body {
+		margin: 24px;
+		width: 65%;
+	}
+	main > table {
+		font-size: 1.4rem;	
+	}
+}

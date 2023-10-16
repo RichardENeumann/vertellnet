@@ -11,10 +11,8 @@
 </head>
 <body>
 	<header>
-		<ul class="logo">
-			<li><h1>Plat en<br>Düsberg</h1></li>
-			<li><img src="gfx/rheinlogo.svg" alt="Logo mit Rhein"></li>
-		</ul>
+		<h1>Plat en<br>Düsberg</h1>
+		<img src="gfx/rheinlogo.svg" alt="Logo mit Rhein">
 	</header>
 	<nav>
 		[ <a href="einfuehrung.html">Infürong</a> - <a href="index.php">Wöörtbuuk</a> ]
@@ -33,13 +31,13 @@
 			<?php wbBuildLetter(); ?>
 		</div> 
 		<br>
-		<div class="wortliste">	
-			<?php wbParseRequest($_GET['lang'], $_GET['query'], $_GET['rType']); ?>
-		</div>
+		
+		<?php wbParseRequest($_GET['lang'], $_GET['query'], $_GET['rType']); ?>
+		
 	</main>
 	<hr>
 	<footer>
-		<small>&copy; 2021<br><a href="impressum.html">Empressom</a></small>
+		<small>&copy; 2023<br><a href="impressum.html">Empressom</a></small>
 	</footer>
 </body>
 </html>

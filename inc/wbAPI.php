@@ -1,4 +1,4 @@
-<?php declare(strict_types=1); 
+<?php
 // Allowed characters for querying database by single letter
 define("ALLOWEDCHARS", "abcdefghijklmnopqrstuvwz");
 
@@ -116,7 +116,7 @@ function wbReturnResult($dbResult, $lang, $rType) {
 	if ($rType === "html") {
 		ob_start();
 		if (empty($result)) {
-			echo "Doa haäwwe wy neks to gefone.<br>";
+			echo "Doa häwwe wy neks to gefone.<br>";
 		} else {
 			echo "<table>";
 			echo $title = (preg_match("/hoog/i", $lang)) ? 
@@ -139,10 +139,8 @@ function wbReturnResult($dbResult, $lang, $rType) {
 			echo json_encode($result);
 		}
 	} else if ($rType === "xml") {
-		//$xmlResponse = new SimpleXMLElement();
-		// array_walk_recursive($result, array ($xmlResponse, "addChild"));
-		header("Content-Type:application/xml");
-		// echo $xmlResponse;
+		// under construction...
+		// header("Content-Type:application/xml");
 		echo "XML";
 	}	
 }

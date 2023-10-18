@@ -14,7 +14,8 @@
 		$_GET["search"] = isset($_GET["search"])? $_GET["search"] : "a";
 
 		$_GET["lang"] = isset($_GET["lang"]) ? $_GET["lang"] : "hoog";
-		$_GET["lang"] = preg_match("/plat|hoog/i", $_GET["lang"]) ? $_GET["lang"] : "hoog";
+
+		$_GET["lang"] = preg_match("/^plat$|^hoog$/i", $_GET["lang"]) ? $_GET["lang"] : "hoog";
 
 		$_GET["return"] = "html";
 	?>

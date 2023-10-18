@@ -10,17 +10,17 @@ define("ALLOWEDCHARS", "abcdefghijklmnopqrstuvwz");
 // Validate request params
 function wbParseRequest($query, $lang, $rType) {
 	$lang = strtolower($lang);
-	$lang = (preg_match("/hoog|plat/", $lang)) ? $lang : "hoog";
+	$lang = (preg_match("/^hoog$|^plat$/", $lang)) ? $lang : "hoog";
 
 	$rType = strtolower($rType);
-	$rType = (preg_match("/html|xml|json/", $rType)) ? $rType : 'html';
+	$rType = (preg_match("/^html$|^xml$|^json$/", $rType)) ? $rType : 'html';
 
 	switch (strlen($query)) {
 		case 0:
 			echo "Van neks komt neks." ;
 			break;
 		case 1:
-			if (preg_match('/'.$query.'/i', ALLOWEDCHARS)) { 
+			if (preg_match("/".$query."/i", ALLOWEDCHARS)) { 
 				wbFetchResult($query, $lang, $rType); 
 			} 
 			else { 
@@ -96,7 +96,7 @@ function wbFetchResult($query, $lang, $rType) {
 		SELECT hoog, plat FROM wvb WHERE '.$lang.' LIKE "'.$exp.'" UNION
 		SELECT hoog, plat FROM zvb WHERE '.$lang.' LIKE "'.$exp.'" ORDER BY '.$lang;
 	try {
-		$dbHandle = new PDO ('mysql:dbname='.$dbConfig['dbname'].'; host='.$dbConfig['servername'], 
+		$dbHandle = new PDO('mysql:dbname='.$dbConfig['dbname'].'; host='.$dbConfig['servername'], 
 			$dbConfig['username'], $dbConfig['password']);
 		$dbResult = $dbHandle->query($dbQuery);
 		$dbHandle = null;

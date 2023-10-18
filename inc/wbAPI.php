@@ -4,8 +4,8 @@ define("ALLOWEDCHARS", "abcdefghijklmnopqrstuvwz");
 
 // validate request params
 function wbParseRequest($lang, $query, $rType) {
-	$lang = ($lang == 'plat') ? 'plat' : 'hoog';
-	$rType = ($rType == 'json') ? 'json' : 'html';
+	$lang = (preg_match("/hoog|plat/i", $lang)) ? $lang : "hoog";
+	$rType = (preg_match("/html|xml|json/i", $rType)) ? $rType : 'html';
 	switch (strlen($query)) {
 		case 0:
 			echo "Van neks komt neks." ;
@@ -92,41 +92,54 @@ function wbFetchResult($lang, $query, $rType) {
 	wbReturnResult($lang, $dbResult, $rType);
 }
 
-// Herein the results will be returned as either html string or a json object, depending on rType
 function wbReturnResult($lang, $dbResult, $rType) {
-	if ($rType == 'html') {
-		echo '<table class="tbanzeige">';
-		if ($lang == 'hoog') {
-			echo '	<tr>
-						<th>hoog</th>
-						<th>plat</th>
-					</tr>';
-			ob_start();		
+	if ($rType === "html") {
+		ob_start();
+		echo "<table>";
+		if ($lang === "hoog") {
+			echo "	<tr>
+						<th>Hoog</th>
+						<th>Plat</th>
+					</tr>";
 			foreach ($dbResult as $row) {
-				echo '		<tr>
-							<td>'.$row['hoog'].'</td>
-							<td>'.$row['plat'].'</td>
-						</tr>';
+				echo "<tr>
+							<td>".$row["hoog"]."</td>
+							<td>".$row["plat"]."</td>
+						</tr>";
 			}
-			ob_end_flush();
 		}
-		elseif ($lang == 'plat') {
-			echo '	<tr>
-						<th>plat</th>
-						<th>hoog</th>
-					</tr>';
-			ob_start();
+		else if ($lang === "plat") {
+			echo "	<tr>
+						<th>Plat</th>
+						<th>Hoog</th>
+					</tr>";
 			foreach ($dbResult as $row) {
-				echo '<tr>
-					<td>'.$row['plat'].'</td>
-					<td>'.$row['hoog'].'</td>
-				</tr>';
+				echo "	<tr>
+							<td>".$row["plat"]."</td>
+							<td>".$row["hoog"]."</td>
+						</tr>";
 			}
-			ob_end_flush();
 		}
-		else { echo 'Doa häwwe wy neks to gefone.'; }	
-		echo '</table>';	
-	}
-	else { echo 'here be json soon'; }	
+		echo "</table>";	
+		ob_end_flush();
+	} else if ($rType === "json") { 
+		$result = [];
+		if ($lang === "hoog") {
+			$result["Hoog"] = "Plat";
+			foreach ($dbResult as $row) {
+				$result[$row["hoog"]] = $row["plat"];
+			}
+		} else {
+			$result["Plat"] = "Hoog";
+			foreach ($dbResult as $row) {
+				$result[$row["plat"]] = $row["hoog"];
+			}
+		}
+		$jsonResponse = json_encode($result);
+		header("Content-Type:application/json");
+		echo $jsonResponse;
+	} else if ($rType === "xml") {
+		echo "XML";
+	}	
 }
 ?>

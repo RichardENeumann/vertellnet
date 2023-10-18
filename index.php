@@ -10,14 +10,14 @@
 		require("inc/wbAPI.php");
 		require("inc/wbBuildNav.php");
 
-		// initialize and validate GET params on first page load
+		// validate GET params on page load
 		$_GET['query'] = isset($_GET['query'])? $_GET['query'] : 'a';
 
 		$_GET['lang'] = isset($_GET['lang']) ? $_GET['lang'] : 'hoog';
 		$_GET["lang"] = preg_match("/plat|hoog/i", $_GET["lang"]) ? $_GET["lang"] : "hoog";
 
 		$_GET['rType'] = isset($_GET['rType']) ? $_GET['rType'] : 'html';
-		$_GET["rType"] = preg_match("/html|xml|json/i", $_GET["rType"]) ? $_GET["rType"] : "html";
+		$_GET["rType"] = preg_match("/html|/i", $_GET["rType"]) ? $_GET["rType"] : "html";
 	?>
 </head>
 <body>

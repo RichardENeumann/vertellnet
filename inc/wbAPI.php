@@ -1,4 +1,9 @@
 <?php
+// Database Query Parameters: 
+// search(string) - if length=1 fetch by starting letter, else search whole wb in lang = hoog|plat for string
+// lang(string) - hoog|plat - determines which way around to query the database
+// return(string) - html|json|xml - returns result as html table, xml or json
+
 // Allowed characters for querying database by single letter
 define("ALLOWEDCHARS", "abcdefghijklmnopqrstuvwz");
 

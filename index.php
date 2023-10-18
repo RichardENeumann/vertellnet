@@ -30,7 +30,7 @@
 	<hr>
 	<main>
 		<form action="">
-			<input type="text" name="search" placeholder="(max. 20 Buchstaben)" pattern="[A-Za-zäüö]{1,20}">
+			<input type="text" name="search" placeholder="max. 20 Buukschtawe..." pattern="[A-Za-zäüö]{1,20}">
 			<?php 
 				echo "<input type=\"hidden\" name=\"lang\" value=\"".$_GET["lang"]."\">";
 			?>

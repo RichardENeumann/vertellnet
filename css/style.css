@@ -37,17 +37,15 @@ main {
 	width: 95%;
 }
 form > button {
-	font-size: 1.2rem;
+	font-size: 1.1rem;
 }
 form > input {
-	font-size: 1.2rem;
+	font-size: 1.1rem;
 }
 .langselector {
 	font-size: 1.2rem;
 }
 .letterselector {
-	display: flex;
-	gap: .6rem;
 	font-size: 1.5rem;
 }
 /* Styling the results table */
@@ -58,7 +56,7 @@ main > table {
 td {
 	width: 50%;
 }
-table tr:nth-Child(odd) { 
+tr:nth-Child(odd) { 
 	background-color: #f0f0f0; 
 }
 /* Styling the introductory page */

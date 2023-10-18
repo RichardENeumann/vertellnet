@@ -1,18 +1,6 @@
-<?php // declare(strict_types=1); 
-// API Database Query Parameters: 
-// 'lang' = string: 'hoog' || 'plat' determines which way around to query the database
-// 'query' = string: search string; if length=1 fetch by starting letter, else search whole wb in hoog || plat for string
-// 'rType' = string: 'html' || 'json' returns result as html string or json object (when called from javascript)
-
+<?php declare(strict_types=1); 
 // allowed chars for browsing database by single letter
 define("ALLOWEDCHARS", "abcdefghijklmnopqrstuvwz");
-
-// initialize and validate GET params on first page load
-$_GET['lang'] = isset($_GET['lang']) ? $_GET['lang'] : 'hoog';
-$_GET['lang'] = ($_GET['lang'] == 'plat') ? 'plat' : 'hoog';
-$_GET['query'] = isset($_GET['query'])? $_GET['query'] : 'a';
-$_GET['rType'] = isset($_GET['rType']) ? $_GET['rType'] : 'html';
-$_GET['rType'] = ($_GET['rType'] == 'json') ? 'json' : 'html';
 
 // validate request params
 function wbParseRequest($lang, $query, $rType) {

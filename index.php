@@ -6,8 +6,19 @@
 	<title>Wörterbuch für Duisburger Platt - Wöörtbuuk vör Düsbergsch Plat</title>
 	<meta name="description" content="ein Wörterbuch für die niederfränkischen Dialekte des Duisburger Stadtgebiets">
 	<link href="css/style.css" rel="stylesheet">
-	<?php require 'inc/wbAPI.php' ?>
-	<?php require 'inc/wbBuildNav.php' ?>
+	<?php 
+		require("inc/wbAPI.php");
+		require("inc/wbBuildNav.php");
+
+		// initialize and validate GET params on first page load
+		$_GET['query'] = isset($_GET['query'])? $_GET['query'] : 'a';
+
+		$_GET['lang'] = isset($_GET['lang']) ? $_GET['lang'] : 'hoog';
+		$_GET["lang"] = preg_match("/plat|hoog/i", $_GET["lang"]) ? $_GET["lang"] : "hoog";
+
+		$_GET['rType'] = isset($_GET['rType']) ? $_GET['rType'] : 'html';
+		$_GET["rType"] = preg_match("/html|xml|json/i", $_GET["rType"]) ? $_GET["rType"] : "html";
+	?>
 </head>
 <body>
 	<header>
@@ -31,9 +42,7 @@
 			<?php wbBuildLetter(); ?>
 		</div> 
 		<br>
-		
 		<?php wbParseRequest($_GET['lang'], $_GET['query'], $_GET['rType']); ?>
-		
 	</main>
 	<hr>
 	<footer>

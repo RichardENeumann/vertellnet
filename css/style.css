@@ -32,21 +32,33 @@ hr {
 main {
 	display: flex;
 	flex-direction: column;
-	
+	gap: 12px;
 	align-items: center;
 	width: 95%;
 }
-.buchstabenliste {
+form > button {
+	font-size: 1.2rem;
+}
+form > input {
+	font-size: 1.2rem;
+}
+.langselector {
+	font-size: 1.2rem;
+}
+.letterselector {
+	display: flex;
+	gap: .6rem;
 	font-size: 1.5rem;
 }
+/* Styling the results table */
 main > table {
 	text-align: left; 
 	width: 100%; 
 }
 table tr:nth-Child(odd) { 
-background-color: #f0f0f0; 
+	background-color: #f0f0f0; 
 }
-/* Gestaltung der Einführungsseite */
+/* Styling the introductory page */
 article { 
 	text-align: justify; 
 }
@@ -59,7 +71,7 @@ article ul {
 footer { 
 	padding-bottom: 1rem; 
 }
-/* Tablet Gestaltung */
+/* Tablet specific styling */
 @media screen and (min-width: 600px) { 
 	html {
 		background-color: gray;
@@ -76,7 +88,7 @@ footer {
 		width: 80%; 
 	}
 }
-/* Desktop Gestaltung */
+/* Desktop specific styling */
 @media only screen and (min-width: 1280px) { 
     body {
 		margin: 24px;

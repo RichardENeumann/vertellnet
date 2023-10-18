@@ -1,31 +1,39 @@
 <?php declare(strict_types=1); 
-// allowed chars for browsing database by single letter
+// Allowed characters for querying database by single letter
 define("ALLOWEDCHARS", "abcdefghijklmnopqrstuvwz");
 
-// validate request params
-function wbParseRequest($lang, $query, $rType) {
-	$lang = (preg_match("/hoog|plat/i", $lang)) ? $lang : "hoog";
-	$rType = (preg_match("/html|xml|json/i", $rType)) ? $rType : 'html';
+// Validate request params
+function wbParseRequest($query, $lang, $rType) {
+	$lang = strtolower($lang);
+	$lang = (preg_match("/hoog|plat/", $lang)) ? $lang : "hoog";
+
+	$rType = strtolower($rType);
+	$rType = (preg_match("/html|xml|json/", $rType)) ? $rType : 'html';
+
 	switch (strlen($query)) {
 		case 0:
 			echo "Van neks komt neks." ;
 			break;
 		case 1:
 			if (preg_match('/'.$query.'/i', ALLOWEDCHARS)) { 
-				wbFetchResult($lang, $query, $rType); 
+				wbFetchResult($query, $lang, $rType); 
 			} 
 			else { 
 				echo "Dat kenne wy niet."; 
 			}
 			break;
 		default:
-			wbFetchResult($lang, $query, $rType);
+			if (preg_match("/[A-Za-zäüö]{1,20}/i", $query)) {
+				wbFetchResult($query, $lang, $rType);
+			} else {
+				echo "Dat kenne wy niet.";
+			}
 			break;
 	}		
 }
 
 // Get request from the database
-function wbFetchResult($lang, $query, $rType) {
+function wbFetchResult($query, $lang, $rType) {
 	// Database credentials are loaded from outside of public web access
 	$dbConfig = parse_ini_file('../../private/config.ini');	
 	if (strlen($query) == 1) { 
@@ -89,37 +97,47 @@ function wbFetchResult($lang, $query, $rType) {
 		$dbHandle = null;
 	}
 	catch(PDOException $e) { echo $e->getMessage(); }
-	wbReturnResult($lang, $dbResult, $rType);
+	wbReturnResult($dbResult, $lang, $rType);
 }
 
-function wbReturnResult($lang, $dbResult, $rType) {
+function wbReturnResult($dbResult, $lang, $rType) {
+	// Prepare results as array
 	$result = [];
-	if (preg_match("/hoog/i", $lang)) {
+	if ($lang === "hoog") {
 		foreach ($dbResult as $row) {
 			$result[$row["hoog"]] = $row["plat"];
 		}
-	} else if (preg_match("/plat/i", $lang)) {
+	} else if ($lang === "plat") {
 		foreach ($dbResult as $row) {
 			$result[$row["plat"]] = $row["hoog"];
 		}
 	}
+	// Serve up results according to requested data format
 	if ($rType === "html") {
 		ob_start();
-		echo "<table>";
-		echo $title = (preg_match("/hoog/i", $lang)) ? 
+		if (empty($result)) {
+			echo "Doa haäwwe wy neks to gefone.<br>";
+		} else {
+			echo "<table>";
+			echo $title = (preg_match("/hoog/i", $lang)) ? 
 			"<tr><th>Hoog</th><th>Plat</th></tr>" : 
-			"<tr><th>Plat</th><th>Hoog</th></tr>";
-		foreach ($result as $key => $value) {
-			echo "	<tr>
-						<td>".$key."</td><td>".$value."</td>
-					</tr>";	
-		}
-		echo "</table>";	
+			"<tr><th>Plat</th><th>Hoog</th></tr>";	
+			foreach ($result as $key => $value) {
+				echo "	<tr>
+							<td>".$key."</td><td>".$value."</td>
+						</tr>";	
+			}
+			echo "</table>";	
+		}	
 		ob_end_flush();
+
 	} else if ($rType === "json") { 
-		$jsonResponse = json_encode($result);
-		header("Content-Type:application/json");
-		echo $jsonResponse;
+		if (empty($result)) {
+			echo "NO RESULTS";
+		} else {
+			header("Content-Type:application/json");
+			echo json_encode($result);
+		}
 	} else if ($rType === "xml") {
 		//$xmlResponse = new SimpleXMLElement();
 		// array_walk_recursive($result, array ($xmlResponse, "addChild"));

@@ -93,52 +93,38 @@ function wbFetchResult($lang, $query, $rType) {
 }
 
 function wbReturnResult($lang, $dbResult, $rType) {
+	$result = [];
+	if (preg_match("/hoog/i", $lang)) {
+		foreach ($dbResult as $row) {
+			$result[$row["hoog"]] = $row["plat"];
+		}
+	} else if (preg_match("/plat/i", $lang)) {
+		foreach ($dbResult as $row) {
+			$result[$row["plat"]] = $row["hoog"];
+		}
+	}
 	if ($rType === "html") {
 		ob_start();
 		echo "<table>";
-		if ($lang === "hoog") {
+		echo $title = (preg_match("/hoog/i", $lang)) ? 
+			"<tr><th>Hoog</th><th>Plat</th></tr>" : 
+			"<tr><th>Plat</th><th>Hoog</th></tr>";
+		foreach ($result as $key => $value) {
 			echo "	<tr>
-						<th>Hoog</th>
-						<th>Plat</th>
-					</tr>";
-			foreach ($dbResult as $row) {
-				echo "<tr>
-							<td>".$row["hoog"]."</td>
-							<td>".$row["plat"]."</td>
-						</tr>";
-			}
-		}
-		else if ($lang === "plat") {
-			echo "	<tr>
-						<th>Plat</th>
-						<th>Hoog</th>
-					</tr>";
-			foreach ($dbResult as $row) {
-				echo "	<tr>
-							<td>".$row["plat"]."</td>
-							<td>".$row["hoog"]."</td>
-						</tr>";
-			}
+						<td>".$key."</td><td>".$value."</td>
+					</tr>";	
 		}
 		echo "</table>";	
 		ob_end_flush();
 	} else if ($rType === "json") { 
-		$result = [];
-		if ($lang === "hoog") {
-			$result["Hoog"] = "Plat";
-			foreach ($dbResult as $row) {
-				$result[$row["hoog"]] = $row["plat"];
-			}
-		} else {
-			$result["Plat"] = "Hoog";
-			foreach ($dbResult as $row) {
-				$result[$row["plat"]] = $row["hoog"];
-			}
-		}
 		$jsonResponse = json_encode($result);
 		header("Content-Type:application/json");
 		echo $jsonResponse;
 	} else if ($rType === "xml") {
+		//$xmlResponse = new SimpleXMLElement();
+		// array_walk_recursive($result, array ($xmlResponse, "addChild"));
+		// header("Content-Type:application/xml");
+		// echo $xmlResponse;
 		echo "XML";
 	}	
 }

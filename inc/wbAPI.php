@@ -123,7 +123,7 @@ function wbReturnResult($lang, $dbResult, $rType) {
 	} else if ($rType === "xml") {
 		//$xmlResponse = new SimpleXMLElement();
 		// array_walk_recursive($result, array ($xmlResponse, "addChild"));
-		// header("Content-Type:application/xml");
+		header("Content-Type:application/xml");
 		// echo $xmlResponse;
 		echo "XML";
 	}	

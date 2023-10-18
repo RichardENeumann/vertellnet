@@ -16,8 +16,7 @@
 		$_GET['lang'] = isset($_GET['lang']) ? $_GET['lang'] : 'hoog';
 		$_GET["lang"] = preg_match("/plat|hoog/i", $_GET["lang"]) ? $_GET["lang"] : "hoog";
 
-		$_GET['rType'] = isset($_GET['rType']) ? $_GET['rType'] : 'html';
-		$_GET["rType"] = preg_match("/html|/i", $_GET["rType"]) ? $_GET["rType"] : "html";
+		$_GET['rType'] = "html";
 	?>
 </head>
 <body>

@@ -100,9 +100,13 @@ function wbFetchResult($query, $lang, $rType) {
 			$dbConfig['username'], $dbConfig['password']);
 		$dbResult = $dbHandle->query($dbQuery);
 		$dbHandle = null;
+		wbReturnResult($dbResult, $lang, $rType);
 	}
-	catch(PDOException $e) { echo $e->getMessage(); }
-	wbReturnResult($dbResult, $lang, $rType);
+	catch(PDOException $e) { 
+		echo $e->getMessage(); 
+		echo "<br>Doa ös wat scheef gegonge.";
+	}
+	
 }
 
 function wbReturnResult($dbResult, $lang, $rType) {

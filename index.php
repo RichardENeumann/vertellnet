@@ -7,6 +7,8 @@
 	<title>Wörterbuch für Duisburger Platt - Wöörtbuuk vör Düsbergsch Plat</title>
 	<meta name="description" content="ein Wörterbuch für die niederfränkischen Dialekte des Duisburger Stadtgebiets">
 	<link href="css/style.css" rel="stylesheet">
+	<link type="image/png" sizes="16x16" rel="icon" href="gfx/icons8-buch-3d-fluency-16.png">
+	<link type="image/png" sizes="32x32" rel="icon" href="gfx/icons8-buch-3d-fluency-32.png">
 	<?php 
 		require("inc/wbAPI.php");
 		

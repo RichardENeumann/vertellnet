@@ -6,26 +6,22 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Wörterbuch für Duisburger Platt - Wöörtbuuk vör Düsbergsch Plat</title>
 	<meta name="description" content="ein Wörterbuch für die niederfränkischen Dialekte des Duisburger Stadtgebiets">
-	<link href="css/style.css" rel="stylesheet">
-	<link type="image/png" sizes="16x16" rel="icon" href="gfx/icons8-buch-3d-fluency-16.png">
-	<link type="image/png" sizes="32x32" rel="icon" href="gfx/icons8-buch-3d-fluency-32.png">
+	<link href="style/base.css" rel="stylesheet">
+	<link type="image/png" sizes="16x16" rel="icon" href="graphics/icons8-buch-3d-fluency-16.png">
+	<link type="image/png" sizes="32x32" rel="icon" href="graphics/icons8-buch-3d-fluency-32.png">
 	<?php 
-		require("inc/wbAPI.php");
 		
+			
 		// Validate GET parameters on page load
-		$_GET["search"] = isset($_GET["search"])? $_GET["search"] : "a";
-
-		$_GET["lang"] = isset($_GET["lang"]) ? $_GET["lang"] : "hoog";
-
-		$_GET["lang"] = preg_match("/^plat$|^hoog$/i", $_GET["lang"]) ? $_GET["lang"] : "hoog";
-
-		$_GET["return"] = "html";
+		$_GET["q"] = isset($_GET["q"])? $_GET["q"] : "a";
+		$_GET["l"] = isset($_GET["l"]) ? $_GET["l"] : "hoog";
+		$_GET["l"] = preg_match("/^plat$|^hoog$/i", $_GET["l"]) ? $_GET["l"] : "hoog";
 	?>
 </head>
 <body>
 	<header>
 		<h1>Plat en<br>Düsberg</h1>
-		<img src="gfx/rheinlogo.svg" alt="Logo mit Rhein">
+		<img src="graphics/rheinlogo.svg" alt="Logo mit Rhein">
 	</header>
 	<nav>
 		[ <a href="einfuehrung.html">Infürong</a> - <a href="index.php">Wöörtbuuk</a> ]
@@ -33,18 +29,16 @@
 	<hr>
 	<main>
 		<form action="">
-			<input type="text" name="search" placeholder="max. 20 Buukschtawe..." pattern="[A-Za-zäüö]{1,20}">
-			<?php 
-				echo "<input type=\"hidden\" name=\"lang\" value=\"".$_GET["lang"]."\">";
-			?>
+			<span class="searchToggle">
+				<input type="radio" id="selHoog" name="l" value="hoog" checked="checked">
+				<label for="selHoog">Hoog</label>	
+				<input type="radio" id="selPlat" name="l" value="plat">
+				<label for="selPlat">Plat</label>
+			</span>	
+			<input type="text" name="q" placeholder="max. 20 Buukschtawe..." pattern="[A-Za-zäüö]{1,20}">
 			<button type="submit">Süke!</button>
 		</form>
-		<div class="langselector">
-			<?php 
-				echo "[ <a href=\"index.php?search=".$_GET["search"]."&lang=hoog\">Hoog</a> - ";
-				echo "<a href=\"index.php?search=".$_GET["search"]."&lang=plat\">Plat</a> ]";
-			?>
-		</div>
+		
 		<div class="letterselector">
 			<?php 
 				echo "<a href=\"index.php?search=a&lang=".$_GET["lang"]."\">A</a> ";
@@ -73,7 +67,16 @@
 				echo "<a href=\"index.php?search=z&lang=".$_GET["lang"]."\">Z</a> ";
 			?>
 		</div> 
-		<?php wbParseRequest($_GET["search"], $_GET["lang"], $_GET["return"]); ?>
+		<div class="langselector">
+			<?php 
+				echo "[ <a href=\"index.php?l=hoog&q=".$_GET["q"]."\">Hoog</a> - ";
+				echo "<a href=\"index.php?l=plat&q=".$_GET["q"]."\">Plat</a> ]";
+			?>
+		</div>
+		<?php 
+			$response = file_get_contents("https://vertell.net/search/".$_GET["l"]."/".$_GET["q"]);
+			echo $response;
+		?>
 	</main>
 	<hr>
 	<footer>

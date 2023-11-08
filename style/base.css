@@ -43,35 +43,8 @@ main {
 form { 
 	font-size: 0;
 }
-.searchToggle {
-	margin: .5rem;	
-}
-.searchToggle input {
-	width: 0;
-	height: 0;
-	position: absolute;
-	left: -9999px;
-}
-.searchToggle input + label {
-	border: 1px solid #00b933;
-	font-size: 1.1rem;
-	padding: .2rem .6rem;
-}
-.searchToggle input + label:first-of-type {
-	border-radius: 4px 0 0 4px;
-	border-right: none;
-  }
-.searchToggle input + label:last-of-type {
-	border-radius: 0 4px 4px 0;
-  }
-.searchToggle input:checked + label {
-	background-color: #00b933;
-	color: white;
-}
 main input[type=text] {
 	border: 1px solid #00b933;
-	border-right: none;
-	border-radius: 4px 0 0 4px;
 	width: 22ch;
 	outline: none;
 	padding: .2rem .6rem;
@@ -79,7 +52,6 @@ main input[type=text] {
 }
 main button {
 	border: 1px solid #00b933;
-	border-radius: 0 4px 4px 0;
 	border-left: none;
 	padding: .2rem .6rem;
 	background-color: #00b933;

@@ -10,8 +10,6 @@
 	<link type="image/png" sizes="16x16" rel="icon" href="graphics/icons8-buch-3d-fluency-16.png">
 	<link type="image/png" sizes="32x32" rel="icon" href="graphics/icons8-buch-3d-fluency-32.png">
 	<?php 
-		
-			
 		// Validate GET parameters on page load
 		$_GET["q"] = isset($_GET["q"])? $_GET["q"] : "a";
 		$_GET["l"] = isset($_GET["l"]) ? $_GET["l"] : "hoog";
@@ -44,30 +42,30 @@
 		</div>
 		<div class="letterselector">
 			<?php 
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=a">A</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=b">B</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=c">C</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=d">D</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=e">E</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=f">F</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=g">G</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=h">H</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=i">I</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=j">J</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=k">K</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=l">L</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=m">M</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=n">N</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=o">O</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=p">P</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=q">Q</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=r">R</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=s">S</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=t">T</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=u">U</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=v">V</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=w">W</a> ';
-				echo '<a href="index.php?l='.$_GET["lang"].'&q=z">Z</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=A">A</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=B">B</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=C">C</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=D">D</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=E">E</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=F">F</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=G">G</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=H">H</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=I">I</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=J">J</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=K">K</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=L">L</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=M">M</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=N">N</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=O">O</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=P">P</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=Q">Q</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=R">R</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=S">S</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=T">T</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=U">U</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=V">V</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=W">W</a> ';
+				echo '<a href="index.php?l='.$_GET["lang"].'&q=Z">Z</a> ';
 			?>
 		</div> 
 		<?php 

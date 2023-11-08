@@ -29,16 +29,19 @@
 	<hr>
 	<main>
 		<form action="">
-			<span class="searchToggle">
-				<input type="radio" id="selHoog" name="l" value="hoog" checked="checked">
-				<label for="selHoog">Hoog</label>	
-				<input type="radio" id="selPlat" name="l" value="plat">
-				<label for="selPlat">Plat</label>
-			</span>	
-			<input type="text" name="q" placeholder="max. 20 Buukschtawe..." pattern="[A-Za-zäüö]{1,20}">
+			<?php 
+				echo '<input type="hidden" name="l" value="'.$_GET["l"].'">';
+				echo '<input type="text" name="q" placeholder="max. 20 Buukschtawe..." 
+					pattern="[A-Za-zäüö]{1,20}" value="'.$_GET["q"].'">';
+			?>		
 			<button type="submit">Süke!</button>
 		</form>
-		
+		<div class="langselector">
+			<?php 
+				echo "[ <a href=\"index.php?l=hoog&q=".$_GET["q"]."\">Hoog</a> - ";
+				echo "<a href=\"index.php?l=plat&q=".$_GET["q"]."\">Plat</a> ]";
+			?>
+		</div>
 		<div class="letterselector">
 			<?php 
 				echo "<a href=\"index.php?search=a&lang=".$_GET["lang"]."\">A</a> ";
@@ -67,12 +70,6 @@
 				echo "<a href=\"index.php?search=z&lang=".$_GET["lang"]."\">Z</a> ";
 			?>
 		</div> 
-		<div class="langselector">
-			<?php 
-				echo "[ <a href=\"index.php?l=hoog&q=".$_GET["q"]."\">Hoog</a> - ";
-				echo "<a href=\"index.php?l=plat&q=".$_GET["q"]."\">Plat</a> ]";
-			?>
-		</div>
 		<?php 
 			$response = file_get_contents("https://vertell.net/search/".$_GET["l"]."/".$_GET["q"]);
 			echo $response;

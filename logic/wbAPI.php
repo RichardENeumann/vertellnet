@@ -1,44 +1,37 @@
 <?php
-// Database Query Parameters: 
-// search(string) - if length=1 fetch by starting letter, else search whole wb in lang = hoog|plat for string
-// lang(string) - hoog|plat - determines which way around to query the database
-// return(string) - html|json|xml - returns result as html table, xml or json
-
 // Allowed characters for querying database by single letter
 define("ALLOWEDCHARS", "abcdefghijklmnopqrstuvwz");
 
-// Validate request params
-function wbParseRequest($query, $lang, $rType) {
-	$lang = strtolower($lang);
-	$lang = (preg_match("/^hoog$|^plat$/", $lang)) ? $lang : "hoog";
-
-	$rType = strtolower($rType);
-	$rType = (preg_match("/^html$|^xml$|^json$/", $rType)) ? $rType : 'html';
-
-	switch (strlen($query)) {
-		case 0:
-			echo "Van neks komt neks." ;
-			break;
-		case 1:
-			if (preg_match("/".$query."/i", ALLOWEDCHARS)) { 
-				wbFetchResult($query, $lang, $rType); 
-			} 
-			else { 
-				echo "Dat kenne wy niet."; 
-			}
-			break;
-		default:
-			if (preg_match("/[A-Za-zäüö]{1,20}/i", $query)) {
-				wbFetchResult($query, $lang, $rType);
-			} else {
-				echo "Dat kenne wy niet.";
-			}
-			break;
-	}		
+function wbParseRequest($lang, $query) {
+	if (preg_match("/^hoog$|^plat$/i", $lang) && 
+		preg_match("/[a-zäüö]{1,20}/i", $query)) {
+		$lang = strtolower($lang);
+		$query = strtolower($query);
+		switch (strlen($query)) {
+			case 0:
+				http_response_code(400);
+				echo "Van neks komt neks. (Empty query)";
+				break;
+			case 1:
+				if (preg_match("/".$query."/", ALLOWEDCHARS)) { 
+					wbFetchResult($lang, $query); 
+				} 
+				else { 
+					http_response_code(400);
+					echo "Dat kenne wy niet. (No words starting with that letter in database)"; 
+				}
+				break;
+			default:
+				wbFetchResult($lang, $query);
+				break;
+		}	
+	} else {
+		http_response_code(400);
+		echo "Dat kenne wy niet. (Query malformed)";
+	}	
 }
 
-// Get request from the database
-function wbFetchResult($query, $lang, $rType) {
+function wbFetchResult($lang, $query) {
 	// Database credentials are loaded from outside of public web access
 	$dbConfig = parse_ini_file('../../private/config.ini');	
 	if (strlen($query) == 1) { 
@@ -100,33 +93,34 @@ function wbFetchResult($query, $lang, $rType) {
 			$dbConfig['username'], $dbConfig['password']);
 		$dbResult = $dbHandle->query($dbQuery);
 		$dbHandle = null;
-		wbReturnResult($dbResult, $lang, $rType);
+		wbReturnResult($lang, $dbResult);
 	}
 	catch(PDOException $e) { 
-		echo $e->getMessage(); 
-		echo "<br>Doa ös wat scheef gegonge.";
+ 		echo $e->getMessage()."<br>"; 
+		http_response_code(500);
+		echo "Doa ös wat scheef gegonge. (Try again later)";
 	}
-	
 }
 
-function wbReturnResult($dbResult, $lang, $rType) {
+function wbReturnResult($lang, $dbResult) {
 	// Prepare results as array
 	$result = [];
-	if ($lang === "hoog") {
+	if ($lang == "hoog") {
 		foreach ($dbResult as $row) {
 			$result[$row["hoog"]] = $row["plat"];
 		}
-	} else if ($lang === "plat") {
+	} else {
 		foreach ($dbResult as $row) {
 			$result[$row["plat"]] = $row["hoog"];
 		}
 	}
-	// Serve up results according to requested data format
-	if ($rType === "html") {
-		ob_start();
+	// Serve up results
+	ob_start();
 		if (empty($result)) {
-			echo "Doa häwwe wy neks to gefone.<br>";
+			http_response_code(204);
+			echo "Doa häwwe wy neks för gefone. (Query successful, no results)";
 		} else {
+			http_response_code(200);
 			echo "<table>";
 			echo $title = (preg_match("/hoog/i", $lang)) ? 
 			"<tr><th>Hoog</th><th>Plat</th></tr>" : 
@@ -139,18 +133,4 @@ function wbReturnResult($dbResult, $lang, $rType) {
 			echo "</table>";	
 		}	
 		ob_end_flush();
-
-	} else if ($rType === "json") { 
-		if (empty($result)) {
-			echo "NO RESULTS";
-		} else {
-			header("Content-Type:application/json");
-			echo json_encode($result);
-		}
-	} else if ($rType === "xml") {
-		// under construction...
-		// header("Content-Type:application/xml");
-		echo "XML";
-	}	
 }
-?>

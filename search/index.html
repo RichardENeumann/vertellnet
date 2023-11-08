@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vertell.net API</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            padding: 1rem;
+            background-color: lightgray;
+        }
+        div {
+            width: 90%;
+            padding: 1rem;
+            border: 1px solid black;
+            border-radius: 5px;
+            background-color: white;
+        }
+        @media screen and (min-width: 600px) { 
+            div {
+                width: 60%;
+            }
+        }    
+    </style>
+</head>
+<body>
+    <div>
+    <h2>Welcome to the vertell.net API</h2>
+    Query structure: <em>https://vertell.net/search/l/q/</em><br><br>
+    <p>
+    Query Parameters:<br><br>
+
+    l = Language. Can be "hoog" (High German) or "plat" (Low German). Query string will be searched for 
+        in given language. <br>
+    q = Query string, 20 character limit, a-z and ü,ö,ä allowed. Single character queries will return all 
+        words starting with queried character. All other queries will return words containing queried string.</p>
+
+    Search results will be returned as Hypermedia. (HTML Table)
+    </div>
+</body>
+</html>

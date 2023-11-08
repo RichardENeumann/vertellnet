@@ -33,7 +33,7 @@ function wbParseRequest($lang, $query) {
 
 function wbFetchResult($lang, $query) {
 	// Database credentials are loaded from outside of public web access
-	$dbConfig = parse_ini_file('../../private/config.ini');	
+	$dbConfig = parse_ini_file(__DIR__."/../../private/config.ini");	
 	if (strlen($query) == 1) { 
 		$exp = $query.'%';
 	}	
@@ -96,9 +96,9 @@ function wbFetchResult($lang, $query) {
 		wbReturnResult($lang, $dbResult);
 	}
 	catch(PDOException $e) { 
- 		echo $e->getMessage()."<br>"; 
 		http_response_code(500);
 		echo "Doa ös wat scheef gegonge. (Try again later)";
+		echo "<br>".$e->getMessage(); 
 	}
 }
 

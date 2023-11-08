@@ -11,7 +11,7 @@
 	<link type="image/png" sizes="32x32" rel="icon" href="images/icons8-buch-3d-fluency-32.png">
 	<?php 
 		// Validate GET parameters on page load
-		$_GET["q"] = isset($_GET["q"])? $_GET["q"] : "a";
+		$_GET["q"] = isset($_GET["q"])? $_GET["q"] : "A";
 		$_GET["l"] = isset($_GET["l"]) ? $_GET["l"] : "hoog";
 		$_GET["l"] = preg_match("/^plat$|^hoog$/i", $_GET["l"]) ? $_GET["l"] : "hoog";
 	?>

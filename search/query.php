@@ -7,7 +7,6 @@ if ($_SERVER["REQUEST_METHOD"] != "GET") {
 } else {
 	if (isset($_GET["l"]) && isset($_GET["q"])) {
 		wbParseRequest($_GET["l"], $_GET["q"]);
-		echo "parserequest";
 	} else {
 		http_response_code(400);
 		echo "So geet dat ni. (Malformed or empty query)";

@@ -7,8 +7,8 @@
 	<title>Wörterbuch für Duisburger Platt - Wöörtbuuk vör Düsbergsch Plat</title>
 	<meta name="description" content="ein Wörterbuch für die niederfränkischen Dialekte des Duisburger Stadtgebiets">
 	<link href="style/base.css" rel="stylesheet">
-	<link type="image/png" sizes="16x16" rel="icon" href="graphics/icons8-buch-3d-fluency-16.png">
-	<link type="image/png" sizes="32x32" rel="icon" href="graphics/icons8-buch-3d-fluency-32.png">
+	<link type="image/png" sizes="16x16" rel="icon" href="images/icons8-buch-3d-fluency-16.png">
+	<link type="image/png" sizes="32x32" rel="icon" href="images/icons8-buch-3d-fluency-32.png">
 	<?php 
 		// Validate GET parameters on page load
 		$_GET["q"] = isset($_GET["q"])? $_GET["q"] : "a";
@@ -19,7 +19,7 @@
 <body>
 	<header>
 		<h1>Plat en<br>Düsberg</h1>
-		<img src="graphics/rheinlogo.svg" alt="Logo mit Rhein">
+		<img src="images/rheinlogo.svg" alt="Logo mit Rhein">
 	</header>
 	<nav>
 		[ <a href="einfuehrung.html">Infürong</a> - <a href="index.php">Wöörtbuuk</a> ]
@@ -69,8 +69,10 @@
 			?>
 		</div> 
 		<?php 
-			$response = file_get_contents("https://vertell.net/search/".$_GET["l"]."/".$_GET["q"]);
-			echo $response;
+			require("logic/wbAPI.php");
+			wbParseRequest($_GET["l"], $_GET["q"]);
+		//	$response = file_get_contents("https://vertell.net/search/".$_GET["l"]."/".$_GET["q"]);
+		//	echo $response;
 		?>
 	</main>
 	<hr>

@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] != "GET") {
 	echo "Dat dörfe Chej niet! (Method not allowed)";
 } else {
 	if (isset($_GET["l"]) && isset($_GET["q"])) {
-		// wbParseRequest($_GET["l"], $_GET["q"]);
+		wbParseRequest($_GET["l"], $_GET["q"]);
 		echo "parserequest";
 	} else {
 		http_response_code(400);

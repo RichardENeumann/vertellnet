@@ -26,7 +26,7 @@
 	</nav>
 	<hr>
 	<main>
-		<form action="">
+		<form action="index.php">
 			<?php 
 				echo '<input type="hidden" name="l" value="'.$_GET["l"].'">';
 				echo '<input type="text" name="q" placeholder="max. 20 Buukschtawe..." 

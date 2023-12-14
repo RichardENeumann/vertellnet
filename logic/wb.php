@@ -4,21 +4,19 @@ define("ALLOWEDCHARS", "abcdefghijklmnopqrstuvwz");
 
 function wbParseRequest($lang, $query) {
 	if (preg_match("/^hoog$|^plat$/i", $lang) && 
-		preg_match("/[a-zäüö]{1,20}/i", $query)) {
+		preg_match("/[a-zßäüö\s]{1,20}/i", $query)) {
 		$lang = strtolower($lang);
 		$query = strtolower($query);
 		switch (strlen($query)) {
 			case 0:
-				http_response_code(400);
-				echo "Van neks komt neks. (Empty query)";
+				echo "Van neks komt neks.";
 				break;
 			case 1:
 				if (preg_match("/".$query."/", ALLOWEDCHARS)) { 
 					wbFetchResult($lang, $query); 
 				} 
 				else { 
-					http_response_code(400);
-					echo "Dat kenne wy niet. (No words starting with that letter in database)"; 
+					echo "Dat kenne wy niet."; 
 				}
 				break;
 			default:
@@ -26,8 +24,7 @@ function wbParseRequest($lang, $query) {
 				break;
 		}	
 	} else {
-		http_response_code(400);
-		echo "Dat kenne wy niet. (Query malformed)";
+		echo "Dat kenne wy niet.";
 	}	
 }
 
@@ -96,8 +93,7 @@ function wbFetchResult($lang, $query) {
 		wbReturnResult($lang, $dbResult);
 	}
 	catch(PDOException $e) { 
-		http_response_code(500);
-		echo "Doa ös wat scheef gegonge. (Try again later)";
+		echo "Doa ös wat scheef gegonge.";
 		echo "<br>".$e->getMessage(); 
 	}
 }
@@ -117,10 +113,8 @@ function wbReturnResult($lang, $dbResult) {
 	// Serve up results
 	ob_start();
 		if (empty($result)) {
-			http_response_code(204);
-			echo "Doa häwwe wy neks för gefone. (Query successful, no results)";
+			echo "Doa häwwe wy neks för gefone.";
 		} else {
-			http_response_code(200);
 			echo "<table>";
 			echo $title = (preg_match("/hoog/i", $lang)) ? 
 			"<tr><th>Hoog</th><th>Plat</th></tr>" : 

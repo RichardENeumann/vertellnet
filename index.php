@@ -30,7 +30,7 @@
 			<?php 
 				echo '<input type="hidden" name="l" value="'.$_GET["l"].'">';
 				echo '<input type="text" name="q" placeholder="max. 20 Buukschtawe..." 
-					pattern="[A-Za-zäüö]{1,20}" value="'.$_GET["q"].'">';
+					pattern="[A-Za-zßäüö\s]{1,20}" value="'.$_GET["q"].'">';
 			?>		
 			<button type="submit">Süke!</button>
 		</form>
@@ -69,7 +69,7 @@
 			?>
 		</div> 
 		<?php 
-			require("logic/wbAPI.php");
+			require("logic/wb.php");
 			wbParseRequest($_GET["l"], $_GET["q"]);
 		//	$response = file_get_contents("https://vertell.net/search/".$_GET["l"]."/".$_GET["q"]);
 		//	echo $response;

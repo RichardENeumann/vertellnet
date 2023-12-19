@@ -1,3 +1,3 @@
 RewriteEngine On
 
-RewriteRule ^([a-z]+)/([a-züöä]+)\/?$ query.php?l=$1&q=$2 [NC,L]
+RewriteRule ^([a-z]+)/([a-züöäß]+)\/?$ query.php?l=$1&q=$2 [NC,L]

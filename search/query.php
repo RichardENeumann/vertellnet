@@ -10,7 +10,6 @@ function wbParseRequestAPI($lang, $query) {
 		switch (strlen($query)) {
 			case 0:
 				http_response_code(400);
-				echo "Van neks komt neks. (Empty query)";
 				break;
 			case 1:
 				if (preg_match("/".$query."/", ALLOWEDCHARS)) { 
@@ -18,7 +17,6 @@ function wbParseRequestAPI($lang, $query) {
 				} 
 				else { 
 					http_response_code(400);
-					echo "Dat kenne wy niet. (No words starting with that letter in database)"; 
 				}
 				break;
 			default:
@@ -27,7 +25,6 @@ function wbParseRequestAPI($lang, $query) {
 		}	
 	} else {
 		http_response_code(400);
-		echo "Dat kenne wy niet. (Query malformed)";
 	}	
 }
 
@@ -94,7 +91,6 @@ function wbFetchResultAPI($lang, $query) {
 		$dbConfig["password"], $dbConfig["dbname"]);
 	if ($dbHandle->connect_errno) {
 		http_response_code(500);
-		die("Verbendong geit ni. (Database Error)");
 	}
 	$dbResult = $dbHandle->query($dbQuery);
 	$dbHandle = null;
@@ -108,9 +104,7 @@ function wbReturnResultAPI($lang, $dbResult) {
 	ob_start();
 	if (empty($result)) {
 		http_response_code(204);
-		echo "Doa häwwe wy neks för gefone. (Query successful, nothing found)";
 	} else if ($lang === "hoog") {
-		http_response_code(200);
 		echo "<table>";
 		echo "<tr><th>Hoog</th><th>Plat</th></tr>"; 
 		foreach ($result as $key) {
@@ -118,7 +112,6 @@ function wbReturnResultAPI($lang, $dbResult) {
 		}
 		echo "</table>";	
 	} else if ($lang === "plat") {
-		http_response_code(200);
 		echo "<table>";
 		echo "<tr><th>Plat</th><th>Hoog</th></tr>";	
 		foreach ($result as $key) {
@@ -132,10 +125,8 @@ function wbReturnResultAPI($lang, $dbResult) {
 
 if ($_SERVER["REQUEST_METHOD"] != "GET") {
 	http_response_code(405);
-	echo "Dat dörwe Chy niet! (Method not allowed)";
 } else if (!isset($_GET["l"]) || !isset($_GET["q"])) {
 	http_response_code(400);
-	echo "So geit dat ni. (Malformed or empty query)";
 } else {
 	wbParseRequestAPI($_GET["l"], $_GET["q"]);
 }

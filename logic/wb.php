@@ -85,7 +85,7 @@ function wbFetchResult($lang, $query) {
 		(SELECT hoog, plat FROM zvb WHERE " . $lang . " LIKE '" . $exp . "') ORDER BY " . $lang;
 
 	// Database credentials are loaded from outside of public web access
-	$dbConfig = parse_ini_file(__DIR__."/../../private/config.ini");		
+	$dbConfig = parse_ini_file(__DIR__."/../../../../private/config.ini");		
 	
 	$dbHandle = new mysqli($dbConfig["servername"], $dbConfig["username"],
 		$dbConfig["password"], $dbConfig["dbname"]);

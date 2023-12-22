@@ -9,6 +9,7 @@
 	<link href="style/base.css" rel="stylesheet">
 	<link type="image/png" sizes="16x16" rel="icon" href="images/icons8-buch-3d-fluency-16.png">
 	<link type="image/png" sizes="32x32" rel="icon" href="images/icons8-buch-3d-fluency-32.png">
+	<script src="logic/htmx.min.js" defer></script>
 	<?php 
 		// Validate GET parameters on page load
 		$_GET["q"] = isset($_GET["q"])? $_GET["q"] : "A";
@@ -26,20 +27,18 @@
 	</nav>
 	<hr>
 	<main>
-		<form action="index.php">
-			<?php 
-				echo '<input type="hidden" name="l" value="'.$_GET["l"].'">';
-				echo '<input type="text" name="q" placeholder="max. 20 Buukschtawe..." 
-					pattern="[A-Za-zßäüö\s]{1,20}" value="'.$_GET["q"].'">';
-			?>		
-			<button type="submit">Süke!</button>
-		</form>
 		<div class="langselector">
-			<?php 
-				echo "[ <a href=\"index.php?l=hoog&q=".$_GET["q"]."\">Hoog</a> - ";
-				echo "<a href=\"index.php?l=plat&q=".$_GET["q"]."\">Plat</a> ]";
-			?>
+			<span hx-get="logic/serve.php" hx-target="#searchbar" hx-include="#searchbar">Hoog</span>
+			<span hx-get="logic/serve.php" hx-target="#searchbar" hx-include="#searchbar">Plat</span>
 		</div>
+
+		<form action="index.php" id="searchbar">
+			<input type="hidden" name="l" value="hoog">
+			<input type="text" name="q" placeholder="max. 20 Buukschtawe..." 
+					pattern="[A-Za-zßäüö\s]{1,20}" value="">
+			<button type="submit" hx-get="/index.php">Süke!</button>
+		</form>
+
 		<div class="letterselector">
 			<?php 
 				echo '<a href="index.php?l='.$_GET["l"].'&q=A">A</a> ';

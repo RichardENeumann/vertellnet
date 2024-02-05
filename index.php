@@ -18,8 +18,10 @@
 </head>
 <body>
 	<header>
-		<h1>Plat en<br>Düsberg</h1>
-		<img src="images/rheinlogo.svg" alt="Logo mit Rhein">
+		<a href="/">
+			<h1>Plat en<br>Düsberg</h1>
+			<img src="images/rheinlogo.svg" alt="Logo mit Rhein">
+		</a>
 	</header>
 	<nav>
 		[ <a href="einfuehrung.html">Infürong</a> - <a href="index.php">Wöörtbuuk</a> ]

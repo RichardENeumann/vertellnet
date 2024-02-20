@@ -24,7 +24,7 @@
 		</a>
 	</header>
 	<nav>
-		[ <a href="einfuehrung.html">Infürong</a> - <a href="index.php">Wöörtbuuk</a> ]
+		[ <a href="einfuehrung.php">Infürong</a> - <a href="index.php">Wöörtbuuk</a> ]
 	</nav>
 	<hr>
 	<main>

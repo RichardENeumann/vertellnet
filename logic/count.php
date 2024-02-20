@@ -1,9 +1,5 @@
 <?php
-$dbWordCount = 0;
-$dbVerbCount = 0;
-
 function wbGetCount() {
-    global $dbWordCount, $dbVerbCount;
 
     $dbConfig = parse_ini_file(__DIR__."/../../private/config.ini");
     
@@ -76,5 +72,7 @@ function wbGetCount() {
     $dbVerbCount = (int) $dbHandle->query($dbQueryVerbs)->fetch_all(MYSQLI_NUM)[0][0];
     $dbHandle = null;
     $dbConfig = null;
+
+    echo "Das Wörterbuch enthält aktuell <b>" . ($dbWordCount + $dbVerbCount) . "</b> Einträge, davon <b>" . $dbVerbCount . "</b> Verben.";  
 }
 wbGetCount();

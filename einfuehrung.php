@@ -74,7 +74,8 @@
 			</article>
 			<article>
 				<h2>Quellen</h2>
-				<em>Das Wörterbuch enthält zur Zeit um die 8300 Einträge, davon ungefähr 1500 Verben.</em><br>
+                <?php include("logic/count.php"); ?>
+                <br><br>
 				Aus folgenden Büchern wurde bisher jedes einzelne platte Wort übertragen:
 				<ul>
 					<li>"Weihnachten am Niederrhein" - H. u. M. Schmidt, Sutton Verlag 2014 (Mitte)</li>

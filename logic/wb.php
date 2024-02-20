@@ -94,6 +94,7 @@ function wbFetchResult($lang, $query) {
 	}
 	$dbResult = $dbHandle->query($dbQuery);
 	$dbHandle = null;
+	$dbConfig = null;
 	wbReturnResult($lang, $dbResult);
 }
 

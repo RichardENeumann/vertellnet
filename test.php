@@ -76,8 +76,9 @@
 				<h2>Quellen</h2>
                 <?php
                     require("logic/count.php");
+                    echo "Das Wörterbuch enthält aktuell <b>" . ($dbWordCount + $dbVerbCount) . "</b> Einträge, davon <b>" . $dbVerbCount . "</b> Verben."  
                 ?>
-                <em>Das Wörterbuch enthält zur Zeit um die 8300 Einträge, davon ungefähr 1500 Verben.</em><br>
+                <br><br>
 				Aus folgenden Büchern wurde bisher jedes einzelne platte Wort übertragen:
 				<ul>
 					<li>"Weihnachten am Niederrhein" - H. u. M. Schmidt, Sutton Verlag 2014 (Mitte)</li>

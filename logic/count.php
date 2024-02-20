@@ -72,13 +72,9 @@ function wbGetCount() {
     }
 
 
-    $dbWordCount = $dbHandle->query($dbQueryWords)->fetch_all(MYSQLI_NUM)[0];
-    $dbVerbCount = $dbHandle->query($dbQueryVerbs);
+    $dbWordCount = (int) $dbHandle->query($dbQueryWords)->fetch_all(MYSQLI_NUM)[0][0];
+    $dbVerbCount = (int) $dbHandle->query($dbQueryVerbs)->fetch_all(MYSQLI_NUM)[0][0];
     $dbHandle = null;
     $dbConfig = null;
-   
-    var_dump($dbWordCount);
-    var_dump($dbVerbCount->fetch_all(MYSQLI_NUM));
 }
-
 wbGetCount();
